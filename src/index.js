@@ -7,12 +7,31 @@ const timerDisplay = document.querySelector('#timer'); // use querySelector() to
 const easyButton = document.querySelector('.easy');
 const medButton = document.querySelector('.medium');
 const hardButton = document.querySelector('.hard');
+const audioHit = new Audio("../assets/hit.mp3");
+const song = new Audio("../assets/molesong.mp3");
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+}
+
+function play(){
+  playAudio(song);
+}
 
 /**
  * Generates a random integer within a range.
@@ -224,7 +243,8 @@ function startTimer() {
 */
 function whack(event) {
   // TODO: Write your code here.
-  updateScore()
+  updateScore();
+  playAudio(audioHit);
   return points;
 }
 
@@ -261,12 +281,10 @@ function setDuration(duration) {
 *
 */
 function stopGame(){
-  // stopAudio(song);  //optional
+  stopAudio(song);  //optional
   clearInterval(timer);
   return "game stopped";
 }
-
-
 
 /**
 *
@@ -280,6 +298,7 @@ function startGame(){
   setDuration(10);
   showUp();
   startTimer();
+  loopAudio(song);
   return "game started";
 }
 
